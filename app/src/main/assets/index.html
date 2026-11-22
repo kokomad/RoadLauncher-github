@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<title>لانشر الطريق</title>
+<style>
+:root{--ac:#ff1a2e;--pn:rgba(12,12,16,.8)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none}
+html,body{margin:0;height:100%;overflow:hidden;background:#000;color:#f4f4f5;font-family:Tajawal,system-ui,sans-serif;touch-action:none}
+#bg{position:fixed;inset:0;background:#000 center/cover no-repeat;will-change:transform;transition:opacity .35s}
+#vg{position:fixed;inset:0;background:linear-gradient(#0009,#0000 22%,#0000 62%,#000c)}
+#world{position:fixed;inset:0;overflow:hidden}
+.bb{position:absolute;width:156px;transform-origin:50% 100%;will-change:transform,opacity;cursor:pointer}
+.fr{position:relative;padding:5px;border-radius:9px;background:linear-gradient(145deg,#9a9aa3,#3a3a42 45%,#8a8a92);box-shadow:0 6px 18px #000a,0 0 26px color-mix(in srgb,var(--ac) 55%,transparent)}
+.fr:before,.fr:after{content:'';position:absolute;top:-9px;width:26px;height:6px;border-radius:3px;background:#fff;box-shadow:0 0 14px 5px var(--ac)}
+.fr:before{left:24px}.fr:after{right:24px}
+.bd{height:116px;border-radius:5px;background:radial-gradient(120% 90% at 50% 0,color-mix(in srgb,var(--ac) 38%,#15151a),#07070a 75%);border:1px solid #fff2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;box-shadow:inset 0 0 22px #000c}
+.ic{width:58px;height:58px;border-radius:16px;display:grid;place-items:center;font-size:31px;box-shadow:0 4px 12px #000a,0 0 16px color-mix(in srgb,var(--ac) 60%,transparent);overflow:hidden}
+.ic img{width:100%;height:100%}
+.nm{font-weight:700;font-size:15px;max-width:140px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-shadow:0 0 10px var(--ac)}
+.pl{display:flex;justify-content:space-between;padding:0 38px;position:relative;z-index:-1}
+.pl i{display:block;width:9px;height:64px;background:linear-gradient(90deg,#222,#aaa 45%,#222);box-shadow:0 0 6px #000}
+.pl:after{content:'';position:absolute;left:10px;right:10px;bottom:-7px;height:14px;border-radius:50%;background:radial-gradient(var(--ac),transparent 70%);opacity:.55}
+.top{position:fixed;top:0;inset-inline:0;padding:max(env(safe-area-inset-top,0px),30px) 16px 8px;display:flex;justify-content:space-between;align-items:flex-start;z-index:5}
+#clk{font-size:48px;font-weight:900;line-height:1;text-shadow:0 0 18px var(--ac),0 2px 6px #000}
+#dt{font-size:13px;opacity:.85;margin-top:4px;text-shadow:0 1px 4px #000}
+.btns{display:flex;gap:8px}
+.b{width:42px;height:42px;border-radius:50%;border:1px solid #fff3;background:var(--pn);color:#fff;font-size:19px;display:grid;place-items:center;backdrop-filter:blur(8px);cursor:pointer}
+.b:active{transform:scale(.92)}
+.dock{position:fixed;bottom:0;inset-inline:0;padding:10px 14px max(env(safe-area-inset-bottom,0px),14px);display:flex;justify-content:center;gap:14px;z-index:5}
+.dock .b{width:54px;height:54px;font-size:25px;border-radius:19px;border-color:var(--ac)}
+#hint{position:fixed;bottom:96px;width:100%;text-align:center;font-size:13px;z-index:4;pointer-events:none;transition:opacity .4s;text-shadow:0 1px 6px #000}
+.sh{position:fixed;inset:0;background:#000b;z-index:10;display:none;align-items:flex-end}.sh.on{display:flex}
+.pnl{width:100%;max-height:80%;overflow:auto;background:#101014;border-top:2px solid var(--ac);border-radius:22px 22px 0 0;padding:18px 16px 26px;touch-action:pan-y}
+.pnl h3{margin:0 0 12px;font-size:19px}
+.th{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.t{height:110px;border-radius:14px;border:2px solid transparent;background-size:cover;background-position:center;display:flex;align-items:flex-end;padding:7px;font-weight:700;font-size:12px;text-shadow:0 1px 4px #000;cursor:pointer}
+.t.on{border-color:#fff}
+.row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #fff1;font-size:15px}
+.row input[type=range]{width:50%;accent-color:var(--ac)}
+#q{width:100%;padding:13px 16px;border-radius:14px;border:1px solid var(--ac);background:#0a0a0d;color:#fff;font:inherit;font-size:16px;margin-bottom:10px;user-select:text}
+.res{display:flex;align-items:center;gap:12px;padding:9px 4px;cursor:pointer}
+.res .ic{width:42px;height:42px;font-size:22px;border-radius:12px}
+.dev{margin-top:16px;font-size:13px;opacity:.7;text-align:center;line-height:1.7}
+#toast{position:fixed;top:40%;left:50%;transform:translateX(-50%);background:#000c;padding:10px 18px;border-radius:12px;z-index:20;display:none;border:1px solid var(--ac)}
+</style></head><body>
+<div id="bg"></div><div id="vg"></div><div id="world"></div>
+<div class="top"><div><div id="clk">00:00</div><div id="dt"></div></div>
+<div class="btns"><div class="b" id="bS">🔍</div><div class="b" id="bT">🎨</div><div class="b" id="bG">⚙️</div></div></div>
+<div id="hint">اسحب للأسفل لتدخل الشارع ⬇</div><div class="dock" id="dock"></div>
+<div class="sh" id="shS"><div class="pnl"><input id="q" placeholder="ابحث عن تطبيق"><div id="rs"></div></div></div>
+<div class="sh" id="shT"><div class="pnl"><h3>الثيمات</h3><div class="th" id="ths"></div></div></div>
+<div class="sh" id="shG"><div class="pnl"><h3>الإعدادات</h3>
+<div class="row">حجم اللوائح<input type="range" id="sz" min="70" max="130"></div>
+<div class="row">سرعة الحركة<input type="range" id="sp" min="5" max="20"></div>
+<div class="row">إظهار الأسماء<input type="checkbox" id="lb"></div>
+<div class="row">الشاشة الرئيسية<button class="b" style="width:auto;padding:0 14px;border-radius:12px" id="hm">اجعله اللانشر</button></div>
+<div class="dev">تطوير: خضر ابو صالحه<br>mankhader@gmail.com</div></div></div>
+<div id="toast"></div>
+<script>
+const $=id=>document.getElementById(id),world=$('world'),bg=$('bg');let W,H;
+/* f=الصورة، x,y=نقطة التلاشي، rw=نصف عرض الطريق عند الأسفل */
+const TH=[
+{n:'مدينة حمراء',f:1,ac:'#ff1a2e',x:.5,y:.585,rw:.4},{n:'نفق الفوانيس',f:2,ac:'#ff4a22',x:.2,y:.4,rw:.3},
+{n:'وردي نيون',f:3,ac:'#ff3dcb',x:.5,y:.56,rw:.4},{n:'عاصفة خضراء',f:4,ac:'#c8ff3d',x:.5,y:.52,rw:.45},
+{n:'مسار برتقالي',f:5,ac:'#ffa000',x:.5,y:.3,rw:.45},{n:'ساعة حمراء',f:6,ac:'#ff2030',x:.5,y:.5,rw:.3},
+{n:'مدينة زرقاء',f:7,ac:'#2f7bff',x:.5,y:.61,rw:.4},{n:'جسر أبيض',f:8,ac:'#ffffff',x:.5,y:.63,rw:.45},
+{n:'غابة حمراء',f:9,ac:'#ff2a3d',x:.55,y:.57,rw:.38},{n:'طريق أصفر',f:10,ac:'#ffd400',x:.5,y:.41,rw:.42},
+{n:'موجات حمراء',f:11,ac:'#ff2a2a',x:.5,y:.5,rw:.3},{n:'بوابة حمراء',f:12,ac:'#ff1a2e',x:.5,y:.6,rw:.25}];
+const DEMO=[['الهاتف','📞','#1fa34a'],['الرسائل','💬','#2f7bff'],['الكاميرا','📷','#444'],['الصور','🖼️','#e8478b'],['واتساب','🟢','#128c7e'],['يوتيوب','▶️','#e00'],['كروم','🌐','#4285f4'],['الخرائط','🗺️','#34a853'],['الموسيقى','🎵','#8e44ad'],['الساعة','⏰','#555'],['الحاسبة','🧮','#f39c12'],['الملفات','📁','#e67e22'],['الإعدادات','⚙️','#607d8b'],['المتجر','🛍️','#00bcd4'],['تيليجرام','✈️','#229ed9'],['الطقس','⛅','#3498db']].map(a=>({name:a[0],emoji:a[1],color:a[2],pkg:'demo.'+a[0]}));
+let apps=DEMO,S=Object.assign({th:0,sz:100,sp:10,lb:true},JSON.parse(localStorage.getItem('rl')||'{}'));
+const save=()=>{try{localStorage.setItem('rl',JSON.stringify(S))}catch(e){}};
+try{if(window.Android){const l=JSON.parse(Android.getApps());if(l.length)apps=l}}catch(e){}
+const launch=a=>window.Android&&!a.pkg.startsWith('demo.')?Android.launch(a.pkg):toast('فتح: '+a.name);
+function toast(t){const e=$('toast');e.textContent=t;e.style.display='block';clearTimeout(toast.t);toast.t=setTimeout(()=>e.style.display='none',1200)}
+const ico=a=>a.icon?`<img src="data:image/png;base64,${a.icon}">`:a.emoji||a.name[0];
+const els=[];
+function build(){world.innerHTML='';els.length=0;apps.forEach((a,i)=>{const d=document.createElement('div');d.className='bb';d.dataset.i=i;
+d.innerHTML=`<div class="fr"><div class="bd"><div class="ic" style="background:${a.color||'#333'}">${ico(a)}</div><div class="nm">${a.name}</div></div></div><div class="pl"><i></i><i></i></div>`;world.appendChild(d);els.push(d)})}
+const depth=i=>.35+i*.42,side=i=>i%2?1:-1;let cam=0,vel=0,goal=null,maxCam=0;
+function theme(){const T=TH[S.th];bg.style.backgroundImage=`url(img/t${T.f}.jpg)`;bg.style.transformOrigin=`${T.x*100}% ${T.y*100}%`;document.documentElement.style.setProperty('--ac',T.ac)}
+function resize(){W=innerWidth;H=innerHeight;maxCam=Math.max(0,depth(apps.length-1)-1.2)}
+function frame(){if(goal!==null){cam+=(goal-cam)*.15;if(Math.abs(goal-cam)<.005){cam=goal;goal=null}}else{cam+=vel;vel*=.93}
+cam=Math.max(0,Math.min(maxCam,cam));const T=TH[S.th],k=S.sz/100,vy=H*T.y,vx=W*T.x;
+bg.style.transform=`scale(${1+cam*.06})`;
+els.forEach((e,i)=>{const t=depth(i)-cam;if(t<-.25||t>5){e.style.display='none';return}
+const s=1/(1+t*1.1),y=vy+(H*.97-vy)*s,x=vx+side(i)*Math.min(T.rw+.1,.43)*W*s;
+e.style.display='block';e.style.left=x+'px';e.style.top=y+'px';e.style.transform=`translate(-50%,-100%) scale(${s*k})`;
+e.style.zIndex=1000-Math.round(t*100);e.style.opacity=Math.max(0,Math.min(1,(5-t)/1.5,(t+.25)*4));
+e.querySelector('.nm').style.display=S.lb?'block':'none'});
+$('hint').style.opacity=cam<.15?.85:0;requestAnimationFrame(frame)}
+window.goHome=()=>{goal=0;document.querySelectorAll('.sh').forEach(s=>s.classList.remove('on'))};
+let dn=0,ly=0,mv=0,tg=null;const spd=()=>S.sp/10/(H*.5);
+world.addEventListener('pointerdown',e=>{dn=1;ly=e.clientY;mv=0;vel=0;goal=null;tg=e.target.closest('.bb')});
+addEventListener('pointermove',e=>{if(!dn)return;const dy=e.clientY-ly;ly=e.clientY;mv+=Math.abs(dy);cam+=dy*spd()*1.6;vel=dy*spd()*.6});
+addEventListener('pointerup',()=>{if(!dn)return;dn=0;if(mv<8&&tg)launch(apps[tg.dataset.i])});
+addEventListener('wheel',e=>{vel+=(e.deltaY>0?1:-1)*.03*S.sp/10});
+const open=k=>{$('sh'+k).classList.add('on');if(k==='S'){$('q').value='';find('');setTimeout(()=>$('q').focus(),50)}};
+$('bS').onclick=()=>open('S');$('bT').onclick=()=>open('T');$('bG').onclick=()=>open('G');
+$('hm').onclick=()=>window.Android?Android.pickHome():toast('متاح في تطبيق أندرويد');
+document.querySelectorAll('.sh').forEach(s=>s.addEventListener('pointerdown',e=>{if(e.target===s)s.classList.remove('on')}));
+function find(q){$('rs').innerHTML='';apps.filter(a=>a.name.includes(q)).slice(0,40).forEach(a=>{const r=document.createElement('div');r.className='res';r.innerHTML=`<div class="ic" style="background:${a.color||'#333'}">${ico(a)}</div><div>${a.name}</div>`;r.onclick=()=>{$('shS').classList.remove('on');launch(a)};$('rs').appendChild(r)})}
+$('q').oninput=e=>find(e.target.value);
+function themes(){$('ths').innerHTML='';TH.forEach((T,i)=>{const d=document.createElement('div');d.className='t'+(i===S.th?' on':'');d.style.backgroundImage=`url(img/t${T.f}.jpg)`;d.textContent=T.n;d.onclick=()=>{S.th=i;save();theme();themes()};$('ths').appendChild(d)})}
+[['sz','sz'],['sp','sp']].forEach(([id,k])=>{$(id).value=S[k];$(id).oninput=e=>{S[k]=+e.target.value;save()}});
+$('lb').checked=S.lb;$('lb').onchange=e=>{S.lb=e.target.checked;save()};
+[['📞','الهاتف'],['💬','الرسائل'],['📷','الكاميرا'],['⚙️','الإعدادات']].forEach(([ic,n])=>{const b=document.createElement('div');b.className='b';b.textContent=ic;b.onclick=()=>{const a=apps.find(x=>x.name===n);a?launch(a):toast(n)};$('dock').appendChild(b)});
+const clock=()=>{const d=new Date();$('clk').textContent=d.toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit',hour12:false});$('dt').textContent=d.toLocaleDateString('ar',{weekday:'long',day:'numeric',month:'long'})};
+setInterval(clock,10000);clock();theme();themes();build();resize();addEventListener('resize',resize);frame();
+</script></body></html>
